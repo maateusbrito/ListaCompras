@@ -6,8 +6,8 @@
     <title>Dashboard de Compras</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
             margin: 0;
             padding: 0;
         }
@@ -17,8 +17,8 @@
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header {
@@ -28,10 +28,12 @@
 
         .header h1 {
             margin: 0;
-            color: #333;
+            font-size: 28px;
+            color: #444;
         }
 
         .header span {
+            font-size: 14px;
             color: #777;
         }
 
@@ -54,8 +56,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
         }
 
         .item-info {
@@ -65,10 +67,12 @@
         .item-name {
             display: block;
             font-weight: bold;
+            font-size: 18px;
         }
 
         .item-quantity {
             color: #555;
+            font-size: 16px;
         }
 
         .item-actions {
@@ -80,10 +84,11 @@
             background-color: #007bff;
             border: none;
             color: #fff;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px 15px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            transition: background-color 0.3s ease;
         }
 
         .item-actions .edit-button {
@@ -99,6 +104,10 @@
             color: #333;
         }
 
+        .item-actions button:hover {
+            opacity: 0.9;
+        }
+
         .item-bought {
             text-decoration: line-through;
             color: #888;
@@ -108,12 +117,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
             border-top: 1px solid #ddd;
         }
 
         .total {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
         }
 
@@ -122,14 +131,19 @@
             border: none;
             color: #fff;
             padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
         .voice-button {
             background-color: #17a2b8;
             margin-left: 10px;
+        }
+
+        .add-button:hover, .voice-button:hover {
+            background-color: #0056b3;
         }
 
         .popup {
@@ -148,9 +162,9 @@
         .popup-content {
             background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             width: 400px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: relative;
         }
 
@@ -158,7 +172,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
             color: #333;
         }
@@ -175,10 +189,11 @@
 
         #item-form input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 16px;
         }
 
         #item-form button {
@@ -186,7 +201,7 @@
             border: none;
             color: #fff;
             padding: 10px;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
             margin-top: 10px;
@@ -195,6 +210,128 @@
         .cancel-button {
             background-color: #6c757d;
             margin-left: 10px;
+        }
+
+
+                /* Consultas de mídia para responsividade */
+                @media (max-width: 768px) {
+            .container {
+                max-width: 90%;
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .item-name {
+                font-size: 16px;
+            }
+
+            .item-quantity {
+                font-size: 14px;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .total {
+                font-size: 18px;
+            }
+
+            .add-button, .voice-button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .popup-content {
+                width: 90%;
+                padding: 15px;
+            }
+
+            #item-form input, #item-form button {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .item-name {
+                font-size: 14px;
+            }
+
+            .item-quantity {
+                font-size: 12px;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .total {
+                font-size: 16px;
+            }
+
+            .add-button, .voice-button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+
+            .popup-content {
+                width: 100%;
+                padding: 10px;
+            }
+
+            #item-form input, #item-form button {
+                font-size: 12px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1000px;
+                padding: 30px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .item-name {
+                font-size: 20px;
+            }
+
+            .item-quantity {
+                font-size: 18px;
+            }
+
+            .total {
+                font-size: 24px;
+            }
+
+            .add-button, .voice-button {
+                font-size: 18px;
+                padding: 12px 25px;
+            }
+
+            .popup-content {
+                width: 500px;
+                padding: 30px;
+            }
+
+            #item-form input, #item-form button {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -239,134 +376,9 @@
         </div>
     </div>
 
-    <script src="utils.js"></script>
-    <script src="js/dashboardcompras.js"></script>
     <script>
         let items = [];
-        let editIndex = -1;
-    
-        // Função para carregar a lista de itens do servidor
-        async function loadItems() {
-            try {
-                const response = await fetch('/api/items', {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-                });
-                if (response.ok) {
-                    items = await response.json();
-                    updateList();
-                } else {
-                    console.error('Erro ao carregar itens:', await response.text());
-                }
-            } catch (error) {
-                console.error('Erro ao carregar itens:', error);
-            }
-        }
-    
-        // Função para salvar a lista de itens no servidor
-        async function saveItems() {
-            try {
-                const response = await fetch('/api/items', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify(items)
-                });
-                if (!response.ok) {
-                    console.error('Erro ao salvar itens:', await response.text());
-                }
-            } catch (error) {
-                console.error('Erro ao salvar itens:', error);
-            }
-        }
-    
-        function openPopup(index = -1) {
-            editIndex = index;
-            document.getElementById('popup').style.display = 'flex';
-            document.getElementById('item-form').reset();
-            document.getElementById('popup-title').innerText = index === -1 ? 'Adicionar Item' : 'Editar Item';
-    
-            if (index >= 0) {
-                const item = items[index];
-                document.getElementById('item-name').value = item.name;
-                document.getElementById('item-quantity').value = item.quantity;
-                document.getElementById('item-price').value = item.price;
-                document.getElementById('item-index').value = index;
-            } else {
-                document.getElementById('item-index').value = '';
-            }
-        }
-    
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
-    
-        function updateList() {
-            const list = document.getElementById('item-list');
-            list.innerHTML = '';
-            let totalAmount = 0;
-    
-            items.forEach((item, index) => {
-                const listItem = document.createElement('li');
-                listItem.className = 'list-item';
-                if (item.bought) {
-                    listItem.classList.add('item-bought');
-                }
-    
-                listItem.innerHTML = `
-                    <div class="item-info">
-                        <span class="item-name">${item.name}</span>
-                        <span class="item-quantity">${item.quantity} x R$ ${item.price.toFixed(2)}</span>
-                    </div>
-                    <div class="item-actions">
-                        <button class="mark-button" onclick="markAsBought(${index})">Marcar como Comprado</button>
-                        <button class="edit-button" onclick="openPopup(${index})">Editar</button>
-                        <button class="delete-button" onclick="deleteItem(${index})">Excluir</button>
-                    </div>
-                `;
-    
-                list.appendChild(listItem);
-                totalAmount += item.quantity * item.price;
-            });
-    
-            document.getElementById('total-amount').innerText = totalAmount.toFixed(2);
-            saveItems();
-        }
-    
-        document.getElementById('item-form').addEventListener('submit', async function (event) {
-            event.preventDefault();
-            const name = document.getElementById('item-name').value;
-            const quantity = parseFloat(document.getElementById('item-quantity').value);
-            const price = parseFloat(document.getElementById('item-price').value);
-            const index = parseInt(document.getElementById('item-index').value);
-    
-            if (index >= 0) {
-                items[index] = { name, quantity, price, bought: items[index].bought };
-            } else {
-                items.push({ name, quantity, price });
-            }
-    
-            closePopup();
-            await saveItems();
-            updateList();
-        });
-    
-        async function markAsBought(index) {
-            if (index >= 0) {
-                items[index].bought = !items[index].bought;
-                await saveItems();
-                updateList();
-            }
-        }
-    
-        async function deleteItem(index) {
-            if (index >= 0) {
-                items.splice(index, 1);
-                await saveItems();
-                updateList();
-            }
-        }
+        let editIndex = -1; // Variável para controlar o item sendo editado
     
         function startVoiceRecognition() {
             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -376,53 +388,151 @@
     
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript.toLowerCase();
-                console.log('Transcript:', transcript); // Verifique o transcript capturado
     
-                // Regex simplificada
-                const regex = /(\d+)\s*(?:unidade|unidades|u|quantidade)?\s*(.+?)\s+a\s*(?:r\$\s*)?([\d,]+(?:\.\d+)?)/i;
+                // Expressão regular aprimorada para capturar diversas variações
+                const regex = /(?:adicionar|por|colocar)?\s*(\d+)\s*(?:unidade|unidades|u|)?\s*(.+?)\s*(?:a|por)\s*(?:r\$\s*)?([\d,]+(?:\.\d+)?)/i;
                 const match = transcript.match(regex);
     
-                console.log('Regex Match:', match); // Verifique o match da regex
-    
                 if (match) {
-                    const quantity = parseFloat(match[1].replace(',', '.'));
+                    const quantity = parseFloat(match[1]);
                     const name = match[2].trim();
                     const price = parseFloat(match[3].replace(',', '.'));
     
-                    // Capitalize the first letter of the name
                     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
-    
-                    console.log('Dados extraídos:', { name: formattedName, quantity, price });
     
                     if (!isNaN(quantity) && !isNaN(price) && formattedName) {
                         items.push({ name: formattedName, quantity, price });
                         updateList();
                     } else {
-                        alert('Dados extraídos incorretos.');
+                        alert("Comando de voz inválido. Tente novamente.");
                     }
                 } else {
-                    alert('Formato de comando de voz incorreto.');
+                    alert("Não entendi o comando. Tente novamente.");
                 }
-            };
-    
-            recognition.onerror = function(event) {
-                console.error('Error occurred in recognition:', event.error);
-            };
-    
-            recognition.onend = function() {
-                console.log('Voice recognition ended.');
             };
     
             recognition.start();
         }
     
-        // Carrega os itens ao iniciar a página
-        loadItems();
-
-        const token = localStorage.getItem('token');
-console.log('Token no dashboardchat:', token);
-
+        function openPopup() {
+            document.getElementById('popup').style.display = 'flex';
+    
+            if (editIndex === -1) {
+                // Quando for novo item, limpar o formulário
+                document.getElementById('item-name').value = '';
+                document.getElementById('item-quantity').value = 1;
+                document.getElementById('item-price').value = 0.0;
+            }
+        }
+    
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            editIndex = -1; // Resetar o índice de edição ao fechar o popup
+        }
+    
+        document.getElementById('item-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            const name = document.getElementById('item-name').value;
+            const quantity = parseFloat(document.getElementById('item-quantity').value);
+            const price = parseFloat(document.getElementById('item-price').value);
+    
+            if (name && !isNaN(quantity) && !isNaN(price)) {
+                const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
+                
+                if (editIndex === -1) {
+                    // Adicionar novo item
+                    items.push({ name: formattedName, quantity, price });
+                } else {
+                    // Atualizar item existente
+                    items[editIndex] = { name: formattedName, quantity, price };
+                }
+    
+                updateList();
+                closePopup();
+            } else {
+                alert('Preencha todos os campos corretamente.');
+            }
+        });
+    
+        function updateList() {
+            const itemList = document.getElementById('item-list');
+            itemList.innerHTML = '';
+    
+            let totalAmount = 0;
+    
+            items.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-item';
+    
+                const itemInfo = document.createElement('div');
+                itemInfo.className = 'item-info';
+                const itemName = document.createElement('span');
+                itemName.className = 'item-name';
+                itemName.textContent = item.name;
+                const itemQuantity = document.createElement('span');
+                itemQuantity.className = 'item-quantity';
+                itemQuantity.textContent = `${item.quantity} unidade(s)`;
+    
+                itemInfo.appendChild(itemName);
+                itemInfo.appendChild(itemQuantity);
+    
+                const itemActions = document.createElement('div');
+                itemActions.className = 'item-actions';
+    
+                const editButton = document.createElement('button');
+                editButton.className = 'edit-button';
+                editButton.textContent = 'Editar';
+                editButton.onclick = () => editItem(index); // Chama a função de edição
+    
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.textContent = 'Excluir';
+                deleteButton.onclick = () => deleteItem(index);
+    
+                const markButton = document.createElement('button');
+                markButton.className = 'mark-button';
+                markButton.textContent = 'Comprado';
+                markButton.onclick = () => markAsBought(index);
+    
+                itemActions.appendChild(editButton);
+                itemActions.appendChild(deleteButton);
+                itemActions.appendChild(markButton);
+    
+                listItem.appendChild(itemInfo);
+                listItem.appendChild(itemActions);
+                itemList.appendChild(listItem);
+    
+                totalAmount += item.quantity * item.price;
+            });
+    
+            // Formatação do valor total em reais
+            document.getElementById('total-amount').textContent = totalAmount.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        }
+    
+        function editItem(index) {
+            const item = items[index];
+            document.getElementById('item-name').value = item.name;
+            document.getElementById('item-quantity').value = item.quantity;
+            document.getElementById('item-price').value = item.price;
+    
+            editIndex = index; // Define o índice de edição
+            openPopup(); // Abre o popup para edição
+        }
+    
+        function deleteItem(index) {
+            items.splice(index, 1);
+            updateList();
+        }
+    
+        function markAsBought(index) {
+            const itemName = document.querySelectorAll('.item-name')[index];
+            itemName.classList.toggle('item-bought');
+        }
     </script>
     
 </body>
-</html>
+</html>    
