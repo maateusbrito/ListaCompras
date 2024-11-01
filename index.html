@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
         }
-
+    
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -20,67 +20,73 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-
+    
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
-
+    
         .header h1 {
             margin: 0;
             font-size: 28px;
             color: #444;
         }
-
+    
         .header span {
             font-size: 14px;
             color: #777;
         }
-
+    
         .content {
             display: flex;
             flex-direction: column;
         }
-
+    
         .list-container {
             margin-bottom: 20px;
         }
-
+    
         #item-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
+    
         .list-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column; /* Alterado para coluna para responsividade */
             padding: 15px;
             border-bottom: 1px solid #eee;
         }
-
+    
         .item-info {
-            flex: 1;
+            display: flex; /* Mudou para flex para responsividade */
+            justify-content: space-between;
+            align-items: center;
+            width: 100%; /* Adicionado para ocupar toda a largura */
         }
-
+    
         .item-name {
             display: block;
             font-weight: bold;
             font-size: 18px;
+            flex: 1; /* Para que o nome ocupe espaço disponível */
         }
-
+    
         .item-quantity {
             color: #555;
             font-size: 16px;
         }
-
+    
         .item-actions {
             display: flex;
+            flex-wrap: wrap; /* Adicionado para permitir quebra em telas menores */
             gap: 10px;
+            margin-top: 10px; /* Adicionado para espaçamento acima dos botões */
         }
-
+    
         .item-actions button {
+            flex: 1 1 auto; /* Flex para que os botões se ajustem */
             background-color: #007bff;
             border: none;
             color: #fff;
@@ -90,29 +96,29 @@
             font-size: 14px;
             transition: background-color 0.3s ease;
         }
-
+    
         .item-actions .edit-button {
             background-color: #28a745;
         }
-
+    
         .item-actions .delete-button {
             background-color: #dc3545;
         }
-
+    
         .item-actions .mark-button {
             background-color: #ffc107;
             color: #333;
         }
-
+    
         .item-actions button:hover {
             opacity: 0.9;
         }
-
+    
         .item-bought {
             text-decoration: line-through;
             color: #888;
         }
-
+    
         .footer {
             display: flex;
             justify-content: space-between;
@@ -120,12 +126,12 @@
             padding: 15px;
             border-top: 1px solid #ddd;
         }
-
+    
         .total {
             font-size: 20px;
             font-weight: bold;
         }
-
+    
         .add-button, .voice-button {
             background-color: #007bff;
             border: none;
@@ -135,17 +141,19 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            width: 100%; /* Tornar os botões de largura total */
+            margin-bottom: 10px; /* Espaçamento entre os botões */
         }
-
+    
         .voice-button {
             background-color: #17a2b8;
-            margin-left: 10px;
+            margin-left: 0; /* Removido o margin-left para ajustar melhor */
         }
-
+    
         .add-button:hover, .voice-button:hover {
             background-color: #0056b3;
         }
-
+    
         .popup {
             display: none;
             position: fixed;
@@ -158,7 +166,7 @@
             justify-content: center;
             z-index: 1000;
         }
-
+    
         .popup-content {
             background-color: #fff;
             padding: 20px;
@@ -167,7 +175,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-
+    
         .popup-close {
             position: absolute;
             top: 10px;
@@ -176,17 +184,17 @@
             cursor: pointer;
             color: #333;
         }
-
+    
         .popup-close:hover {
             color: #dc3545;
         }
-
+    
         #item-form label {
             display: block;
             margin: 10px 0 5px;
             font-weight: bold;
         }
-
+    
         #item-form input {
             width: 100%;
             padding: 10px;
@@ -195,7 +203,7 @@
             box-sizing: border-box;
             font-size: 16px;
         }
-
+    
         #item-form button {
             background-color: #007bff;
             border: none;
@@ -205,135 +213,135 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 10px;
+            width: 100%; /* Botão do formulário em largura total */
         }
-
+    
         .cancel-button {
             background-color: #6c757d;
             margin-left: 10px;
         }
-
-
-                /* Consultas de mídia para responsividade */
-                @media (max-width: 768px) {
+    
+        /* Consultas de mídia para responsividade */
+        @media (max-width: 768px) {
             .container {
                 max-width: 90%;
                 padding: 15px;
             }
-
+    
             .header h1 {
                 font-size: 24px;
             }
-
+    
             .item-name {
                 font-size: 16px;
             }
-
+    
             .item-quantity {
                 font-size: 14px;
             }
-
+    
             .footer {
                 flex-direction: column;
                 align-items: flex-start;
             }
-
+    
             .total {
                 font-size: 18px;
             }
-
-            .add-button, .voice-button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .popup-content {
-                width: 90%;
-                padding: 15px;
-            }
-
-            #item-form input, #item-form button {
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 10px;
-            }
-
-            .header h1 {
-                font-size: 20px;
-            }
-
-            .item-name {
-                font-size: 14px;
-            }
-
-            .item-quantity {
-                font-size: 12px;
-            }
-
-            .footer {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .total {
-                font-size: 16px;
-            }
-
+    
             .add-button, .voice-button {
                 font-size: 14px;
                 padding: 8px 15px;
             }
-
+    
+            .popup-content {
+                width: 90%;
+                padding: 15px;
+            }
+    
+            #item-form input, #item-form button {
+                font-size: 14px;
+            }
+        }
+    
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+    
+            .header h1 {
+                font-size: 20px;
+            }
+    
+            .item-name {
+                font-size: 14px;
+            }
+    
+            .item-quantity {
+                font-size: 12px;
+            }
+    
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            .total {
+                font-size: 16px;
+            }
+    
+            .add-button, .voice-button {
+                font-size: 14px;
+            }
+    
             .popup-content {
                 width: 100%;
                 padding: 10px;
             }
-
+    
             #item-form input, #item-form button {
                 font-size: 12px;
             }
         }
-
+    
         @media (min-width: 1024px) {
             .container {
                 max-width: 1000px;
                 padding: 30px;
             }
-
+    
             .header h1 {
                 font-size: 32px;
             }
-
+    
             .item-name {
                 font-size: 20px;
             }
-
+    
             .item-quantity {
                 font-size: 18px;
             }
-
+    
             .total {
                 font-size: 24px;
             }
-
+    
             .add-button, .voice-button {
                 font-size: 18px;
                 padding: 12px 25px;
             }
-
+    
             .popup-content {
                 width: 500px;
                 padding: 30px;
             }
-
+    
             #item-form input, #item-form button {
                 font-size: 18px;
             }
         }
     </style>
+    
 </head>
 <body>
     <div class="container">
