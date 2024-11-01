@@ -456,62 +456,63 @@
         });
     
         function updateList() {
-            const itemList = document.getElementById('item-list');
-            itemList.innerHTML = '';
-    
-            let totalAmount = 0;
-    
-            items.forEach((item, index) => {
-                const listItem = document.createElement('li');
-                listItem.className = 'list-item';
-    
-                const itemInfo = document.createElement('div');
-                itemInfo.className = 'item-info';
-                const itemName = document.createElement('span');
-                itemName.className = 'item-name';
-                itemName.textContent = item.name;
-                const itemQuantity = document.createElement('span');
-                itemQuantity.className = 'item-quantity';
-                itemQuantity.textContent = `${item.quantity} unidade(s)`;
-    
-                itemInfo.appendChild(itemName);
-                itemInfo.appendChild(itemQuantity);
-    
-                const itemActions = document.createElement('div');
-                itemActions.className = 'item-actions';
-    
-                const editButton = document.createElement('button');
-                editButton.className = 'edit-button';
-                editButton.textContent = 'Editar';
-                editButton.onclick = () => editItem(index); // Chama a função de edição
-    
-                const deleteButton = document.createElement('button');
-                deleteButton.className = 'delete-button';
-                deleteButton.textContent = 'Excluir';
-                deleteButton.onclick = () => deleteItem(index);
-    
-                const markButton = document.createElement('button');
-                markButton.className = 'mark-button';
-                markButton.textContent = 'Comprado';
-                markButton.onclick = () => markAsBought(index);
-    
-                itemActions.appendChild(editButton);
-                itemActions.appendChild(deleteButton);
-                itemActions.appendChild(markButton);
-    
-                listItem.appendChild(itemInfo);
-                listItem.appendChild(itemActions);
-                itemList.appendChild(listItem);
-    
-                totalAmount += item.quantity * item.price;
-            });
-    
-            // Formatação do valor total em reais
-            document.getElementById('total-amount').textContent = totalAmount.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            });
-        }
+    const itemList = document.getElementById('item-list');
+    itemList.innerHTML = '';
+
+    let totalAmount = 0;
+
+    items.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-item';
+
+        const itemInfo = document.createElement('div');
+        itemInfo.className = 'item-info';
+        const itemName = document.createElement('span');
+        itemName.className = 'item-name';
+        itemName.textContent = item.name;
+        const itemQuantity = document.createElement('span');
+        itemQuantity.className = 'item-quantity';
+        itemQuantity.textContent = `${item.quantity} unidade(s) - R$ ${item.price.toFixed(2)}`;
+
+        itemInfo.appendChild(itemName);
+        itemInfo.appendChild(itemQuantity);
+
+        const itemActions = document.createElement('div');
+        itemActions.className = 'item-actions';
+
+        const editButton = document.createElement('button');
+        editButton.className = 'edit-button';
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => editItem(index); // Chama a função de edição
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-button';
+        deleteButton.textContent = 'Excluir';
+        deleteButton.onclick = () => deleteItem(index);
+
+        const markButton = document.createElement('button');
+        markButton.className = 'mark-button';
+        markButton.textContent = 'Comprado';
+        markButton.onclick = () => markAsBought(index);
+
+        itemActions.appendChild(editButton);
+        itemActions.appendChild(deleteButton);
+        itemActions.appendChild(markButton);
+
+        listItem.appendChild(itemInfo);
+        listItem.appendChild(itemActions);
+        itemList.appendChild(listItem);
+
+        totalAmount += item.quantity * item.price;
+    });
+
+    // Formatação do valor total em reais
+    document.getElementById('total-amount').textContent = totalAmount.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+}
+
     
         function editItem(index) {
             const item = items[index];
