@@ -389,9 +389,7 @@
     
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript.toLowerCase();
-    
-                // Expressão regular aprimorada para capturar diversas variações
-                const regex = /(?:adicionar|por|colocar|adiona|bota|acrescenta|acrescentar|comprar|trazer|coloque|incluir|insira)?\s*(\d+|seis|cinco|quatro|três|dois|um)\s*(?:quantidade|quilos|kilos|quilo|fardos|fardo|unidade|unidades|u)?\s*(.+?)\s*(?:a|por|no valor|pela quantia|no preço|por|a|o valor|de)\s*(?:R\$\s*)?([\d]+(?:,[\d]{1,2})?|(?:um|dois|três|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|vinte e um|vinte e dois|vinte e três|vinte e quatro|vinte e cinco|vinte e seis|vinte e sete|vinte e oito|vinte e nove)(?: e (um|dois|três|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|vinte e um|vinte e dois|vinte e três|vinte e quatro|vinte e cinco|vinte e seis|vinte e sete|vinte e oito|vinte e nove))?(?:\s*reais)?)/i;
+                const regex = /(?:adicionar|por|colocar|adiona|bota|acrescenta|acrescentar|comprar|trazer|coloque|incluir|insira)?\s*(\d+|seis|cinco|quatro|três|dois|um)\s*(?:quantidade|quilos|kilos|quilo|fardos|fardo|unidade|unidades|u)?\s*(.+?)\s*(?:a|por|no valor|pela quantia|no preço|por|a|o valor|de)\s*(?:R\$\s*)?([\d]+(?:,\d{2})?|(?:um|dois|três|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|vinte e um|vinte e dois|vinte e três|vinte e quatro|vinte e cinco|vinte e seis|vinte e sete|vinte e oito|vinte e nove)(?: e (um|dois|três|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|vinte e um|vinte e dois|vinte e três|vinte e quatro|vinte e cinco|vinte e seis|vinte e sete|vinte e oito|vinte e nove))?(?:\s*reais)?)/i;
     
                 const match = transcript.match(regex);
     
@@ -399,10 +397,10 @@
                     // Convertendo a quantidade
                     const quantityWords = match[1];
                     const quantity = isNaN(quantityWords) ? 
-                        { "um": 1, "dois": 2, "três": 3, "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9, "dez": 10, "onze": 11, "doze": 12, "treze": 13, "quatorze": 14, "quinze": 15, "dezesseis": 16, "dezessete": 17, "dezoito": 18, "dezenove": 19, "vinte": 20 }[quantityWords] : parseFloat(quantityWords);
-                    
+                        { "um": 1, "dois": 2, "três": 3, "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9, "dez": 10, "onze": 11, "doze": 12, "treze": 13, "quatorze": 14, "quinze": 15, "dezesseis": 16, "dezessete": 17, "dezoito": 18, "dezenove": 19, "vinte": 20 }[quantityWords] : Number(quantityWords);
+    
                     const name = match[2].trim();
-                    
+    
                     // Formatação do preço
                     let price = match[3].replace(',', '.').replace(' reais', ''); 
                     price = price.replace(/\s+/g, ''); // Remove espaços em branco
@@ -418,13 +416,13 @@
                             "onze": 11, "doze": 12, "treze": 13, "quatorze": 14, 
                             "quinze": 15, "dezesseis": 16, "dezessete": 17, "dezoito": 18, 
                             "dezenove": 19, "vinte": 20 
-                        }[word] || parseFloat(word);
+                        }[word] || Number(word);
                         
                         priceValue += isNaN(numberValue) ? 0 : numberValue;
                     });
     
                     // Verifique se o priceValue contém um valor decimal correto
-                    priceValue = priceValue || parseFloat(price.replace('.', ','));
+                    priceValue = Number(price) || priceValue;
     
                     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     
@@ -457,7 +455,7 @@
                 // Quando for novo item, limpar o formulário
                 document.getElementById('item-name').value = '';
                 document.getElementById('item-quantity').value = 1;
-                document.getElementById('item-price').value = 0.0;
+                document.getElementById('item-price').value = '0,00';
             }
         }
     
@@ -470,8 +468,8 @@
             e.preventDefault();
     
             const name = document.getElementById('item-name').value;
-            const quantity = parseFloat(document.getElementById('item-quantity').value);
-            const price = parseFloat(document.getElementById('item-price').value.replace(',', '.'));
+            const quantity = Number(document.getElementById('item-quantity').value);
+            const price = Number(document.getElementById('item-price').value.replace(',', '.'));
     
             if (name && !isNaN(quantity) && !isNaN(price)) {
                 const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -508,7 +506,7 @@
                 itemName.textContent = item.name;
                 const itemQuantity = document.createElement('span');
                 itemQuantity.className = 'item-quantity';
-                itemQuantity.textContent = `${item.quantity} unidade(s) - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+                itemQuantity.textContent = `${item.quantity} unidade(s) - R$ ${item.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     
                 itemInfo.appendChild(itemName);
                 itemInfo.appendChild(itemQuantity);
@@ -545,7 +543,9 @@
             // Formatação do valor total em reais
             document.getElementById('total-amount').textContent = totalAmount.toLocaleString('pt-BR', {
                 style: 'currency',
-                currency: 'BRL'
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
             });
         }
     
@@ -553,7 +553,7 @@
             const item = items[index];
             document.getElementById('item-name').value = item.name;
             document.getElementById('item-quantity').value = item.quantity;
-            document.getElementById('item-price').value = item.price.toFixed(2).replace('.', ',');
+            document.getElementById('item-price').value = item.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace('.', ',');
     
             editIndex = index; // Define o índice de edição
             openPopup(); // Abre o popup para edição
