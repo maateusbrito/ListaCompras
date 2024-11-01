@@ -423,7 +423,7 @@
                     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     
                     if (!isNaN(quantity) && !isNaN(priceValue) && formattedName) {
-                        items.push({ name: formattedName, quantity, price: priceValue });
+                        items.push({ name: formattedName, quantity, price: parseFloat(priceValue.toFixed(2)) }); // Garante que o preço tenha 2 casas decimais
                         updateList();
                     } else {
                         alert("Comando de voz inválido. Tente novamente.");
@@ -452,7 +452,7 @@
                 // Quando for novo item, limpar o formulário
                 document.getElementById('item-name').value = '';
                 document.getElementById('item-quantity').value = 1;
-                document.getElementById('item-price').value = 0.00; // Preço inicial formatado
+                document.getElementById('item-price').value = '0.00'; // Preço inicial formatado
             }
         }
     
@@ -466,17 +466,17 @@
     
             const name = document.getElementById('item-name').value;
             const quantity = parseFloat(document.getElementById('item-quantity').value);
-            const price = parseFloat(document.getElementById('item-price').value);
+            const price = parseFloat(document.getElementById('item-price').value.replace(',', '.')); // Adicionado para garantir o formato correto
     
             if (name && !isNaN(quantity) && !isNaN(price)) {
                 const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     
                 if (editIndex === -1) {
                     // Adicionar novo item
-                    items.push({ name: formattedName, quantity, price });
+                    items.push({ name: formattedName, quantity, price: parseFloat(price.toFixed(2)) }); // Garante que o preço tenha 2 casas decimais
                 } else {
                     // Atualizar item existente
-                    items[editIndex] = { name: formattedName, quantity, price };
+                    items[editIndex] = { name: formattedName, quantity, price: parseFloat(price.toFixed(2)) }; // Garante que o preço tenha 2 casas decimais
                 }
     
                 updateList();
