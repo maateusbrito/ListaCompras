@@ -452,7 +452,7 @@
                 // Quando for novo item, limpar o formulário
                 document.getElementById('item-name').value = '';
                 document.getElementById('item-quantity').value = 1;
-                document.getElementById('item-price').value = 0.0;
+                document.getElementById('item-price').value = 0.00; // Preço inicial formatado
             }
         }
     
@@ -548,7 +548,7 @@
             const item = items[index];
             document.getElementById('item-name').value = item.name;
             document.getElementById('item-quantity').value = item.quantity;
-            document.getElementById('item-price').value = item.price;
+            document.getElementById('item-price').value = item.price.toFixed(2); // Formatação do preço
     
             editIndex = index; // Define o índice de edição
             openPopup(); // Abre o popup para edição
