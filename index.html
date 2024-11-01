@@ -383,47 +383,53 @@
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
     
-            recognition.onstart = function () {
+            recognition.onstart = function() {
                 console.log("Reconhecimento de voz iniciado. Fale agora...");
             };
     
-            recognition.onresult = function (event) {
+            recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript.toLowerCase();
+    
+                // Expressão regular aprimorada para capturar diversas variações
                 const regex = /(?:adicionar|por|colocar|adiona|bota|acrescenta|acrescentar|comprar|trazer|coloque|incluir|insira)?\s*(\d+|seis|cinco|quatro|três|dois|um)\s*(?:quantidade|quilos|kilos|quilo|fardos|fardo|unidade|unidades|u)?\s*(.+?)\s*(?:a|por|no valor|pela quantia|no preço|por|a|o valor|de)\s*(?:R\$\s*)?([\d]+(?:,\d{2})?|(?:um|dois|três|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|vinte e um|vinte e dois|vinte e três|vinte e quatro|vinte e cinco|vinte e seis|vinte e sete|vinte e oito|vinte e nove)(?: e (um|dois|três|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|vinte e um|vinte e dois|vinte e três|vinte e quatro|vinte e cinco|vinte e seis|vinte e sete|vinte e oito|vinte e nove))?(?:\s*reais)?)/i;
     
                 const match = transcript.match(regex);
     
                 if (match) {
+                    // Convertendo a quantidade
                     const quantityWords = match[1];
-                    const quantity = isNaN(quantityWords) ?
+                    const quantity = isNaN(quantityWords) ? 
                         { "um": 1, "dois": 2, "três": 3, "quatro": 4, "cinco": 5, "seis": 6, "sete": 7, "oito": 8, "nove": 9, "dez": 10, "onze": 11, "doze": 12, "treze": 13, "quatorze": 14, "quinze": 15, "dezesseis": 16, "dezessete": 17, "dezoito": 18, "dezenove": 19, "vinte": 20 }[quantityWords] : parseFloat(quantityWords);
-    
+                    
                     const name = match[2].trim();
-    
-                    let price = match[3].replace(',', '.').replace(' reais', '');
+                    
+                    // Formatação do preço
+                    let price = match[3].replace(',', '.').replace(' reais', ''); 
                     price = price.replace(/\s+/g, ''); // Remove espaços em branco
     
+                    // Se o preço estiver por extenso, precisamos converter
                     const priceWords = price.split(' e ').map(p => p.trim());
                     let priceValue = 0;
     
                     priceWords.forEach(word => {
-                        const numberValue = {
-                            "um": 1, "dois": 2, "três": 3, "quatro": 4, "cinco": 5,
-                            "seis": 6, "sete": 7, "oito": 8, "nove": 9, "dez": 10,
-                            "onze": 11, "doze": 12, "treze": 13, "quatorze": 14,
-                            "quinze": 15, "dezesseis": 16, "dezessete": 17, "dezoito": 18,
-                            "dezenove": 19, "vinte": 20
+                        const numberValue = { 
+                            "um": 1, "dois": 2, "três": 3, "quatro": 4, "cinco": 5, 
+                            "seis": 6, "sete": 7, "oito": 8, "nove": 9, "dez": 10, 
+                            "onze": 11, "doze": 12, "treze": 13, "quatorze": 14, 
+                            "quinze": 15, "dezesseis": 16, "dezessete": 17, "dezoito": 18, 
+                            "dezenove": 19, "vinte": 20 
                         }[word] || parseFloat(word);
-    
+                        
                         priceValue += isNaN(numberValue) ? 0 : numberValue;
                     });
     
+                    // Verifique se o priceValue contém um valor decimal correto
                     priceValue = parseFloat(price) || priceValue;
     
                     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     
                     if (!isNaN(quantity) && !isNaN(priceValue) && formattedName) {
-                        items.push({ name: formattedName, quantity, price: parseFloat(priceValue.toFixed(2)) }); // Garante que o preço tenha 2 casas decimais
+                        items.push({ name: formattedName, quantity, price: priceValue });
                         updateList();
                     } else {
                         alert("Comando de voz inválido. Tente novamente.");
@@ -433,12 +439,11 @@
                 }
             };
     
-            recognition.onerror = function (event) {
-                console.error("Erro no reconhecimento de voz: " + event.error);
-                alert("Erro no reconhecimento de voz. Tente novamente.");
+            recognition.onerror = function(event) {
+                alert("Erro no reconhecimento de voz: " + event.error);
             };
     
-            recognition.onend = function () {
+            recognition.onend = function() {
                 console.log("Reconhecimento de voz finalizado.");
             };
     
@@ -452,7 +457,7 @@
                 // Quando for novo item, limpar o formulário
                 document.getElementById('item-name').value = '';
                 document.getElementById('item-quantity').value = 1;
-                document.getElementById('item-price').value = '0.00'; // Preço inicial formatado
+                document.getElementById('item-price').value = 0.0;
             }
         }
     
@@ -466,17 +471,17 @@
     
             const name = document.getElementById('item-name').value;
             const quantity = parseFloat(document.getElementById('item-quantity').value);
-            const price = parseFloat(document.getElementById('item-price').value.replace(',', '.')); // Adicionado para garantir o formato correto
+            const price = parseFloat(document.getElementById('item-price').value);
     
             if (name && !isNaN(quantity) && !isNaN(price)) {
                 const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     
                 if (editIndex === -1) {
                     // Adicionar novo item
-                    items.push({ name: formattedName, quantity, price: parseFloat(price.toFixed(2)) }); // Garante que o preço tenha 2 casas decimais
+                    items.push({ name: formattedName, quantity, price });
                 } else {
                     // Atualizar item existente
-                    items[editIndex] = { name: formattedName, quantity, price: parseFloat(price.toFixed(2)) }; // Garante que o preço tenha 2 casas decimais
+                    items[editIndex] = { name: formattedName, quantity, price };
                 }
     
                 updateList();
@@ -548,7 +553,7 @@
             const item = items[index];
             document.getElementById('item-name').value = item.name;
             document.getElementById('item-quantity').value = item.quantity;
-            document.getElementById('item-price').value = item.price.toFixed(2); // Formatação do preço
+            document.getElementById('item-price').value = item.price;
     
             editIndex = index; // Define o índice de edição
             openPopup(); // Abre o popup para edição
