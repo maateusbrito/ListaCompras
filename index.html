@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Compras</title>
     <style>
-
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f7f7f7;
             margin: 0;
             padding: 0;
         }
-
+    
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -21,112 +20,127 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-
+    
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
-
+    
         .header h1 {
             margin: 0;
             font-size: 28px;
             color: #444;
         }
-
+    
         .header span {
             font-size: 14px;
             color: #777;
         }
-
+    
         .content {
             display: flex;
             flex-direction: column;
         }
-
+    
         .list-container {
             margin-bottom: 20px;
         }
-
+    
         #item-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
+    
         .list-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column; /* Mantido como coluna */
             padding: 15px;
             border-bottom: 1px solid #eee;
         }
-
+    
         .item-info {
-            flex: 1;
+            display: flex; /* Mantenha flex para melhor responsividade */
+            justify-content: space-between;
+            align-items: center;
+            width: 100%; /* Ocupa toda a largura */
         }
-
+    
         .item-name {
             display: block;
             font-weight: bold;
             font-size: 18px;
+            flex: 1; /* O nome ocupa o espaço disponível */
+            margin-right: 10px; /* Espaçamento entre nome e quantidade */
         }
-
+    
         .item-quantity {
             color: #555;
-            font-size: 16px;
+            font-size: 17px;
         }
-
+    
+        .item-description {
+            font-size: 14px; /* Tamanho da fonte da descrição */
+            color: #666;
+            margin-top: 5px; /* Espaço entre o nome e a descrição */
+        }
+    
         .item-actions {
             display: flex;
+            justify-content: center; /* Centralizando os botões */
+            flex-wrap: wrap; /* Permitir quebra em telas menores */
             gap: 10px;
+            margin-top: 10px; /* Espaçamento acima dos botões */
         }
-
+    
         .item-actions button {
+            flex: 1 1 auto; /* Ajustar a largura dos botões */
             background-color: #007bff;
             border: none;
             color: #fff;
-            padding: 8px 15px;
+            padding: 10px 15px; /* Aumentado o padding */
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s ease;
+            min-width: 100px; /* Largura mínima para botões */
         }
-
+    
         .item-actions .edit-button {
             background-color: #28a745;
         }
-
+    
         .item-actions .delete-button {
             background-color: #dc3545;
         }
-
+    
         .item-actions .mark-button {
             background-color: #ffc107;
             color: #333;
         }
-
+    
         .item-actions button:hover {
             opacity: 0.9;
         }
-
+    
         .item-bought {
             text-decoration: line-through;
             color: #888;
         }
-
+    
         .footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            border-top: 1px solid #ddd;
+            padding: 25px;
+            border-top: 2px solid #ddd;
         }
-
+    
         .total {
-            font-size: 20px;
+            font-size: 25px;
             font-weight: bold;
         }
-
+    
         .add-button, .voice-button {
             background-color: #007bff;
             border: none;
@@ -136,17 +150,18 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            width: calc(30% - 20px); /* Largura total menos margens */
+            margin: 0 10px 10px 10px; /* Margens ajustadas */
         }
-
+    
         .voice-button {
             background-color: #17a2b8;
-            margin-left: 10px;
         }
-
+    
         .add-button:hover, .voice-button:hover {
             background-color: #0056b3;
         }
-
+    
         .popup {
             display: none;
             position: fixed;
@@ -159,7 +174,7 @@
             justify-content: center;
             z-index: 1000;
         }
-
+    
         .popup-content {
             background-color: #fff;
             padding: 20px;
@@ -168,7 +183,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-
+    
         .popup-close {
             position: absolute;
             top: 10px;
@@ -177,17 +192,17 @@
             cursor: pointer;
             color: #333;
         }
-
+    
         .popup-close:hover {
             color: #dc3545;
         }
-
+    
         #item-form label {
             display: block;
             margin: 10px 0 5px;
             font-weight: bold;
         }
-
+    
         #item-form input {
             width: 100%;
             padding: 10px;
@@ -196,7 +211,7 @@
             box-sizing: border-box;
             font-size: 16px;
         }
-
+    
         #item-form button {
             background-color: #007bff;
             border: none;
@@ -206,8 +221,9 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 10px;
+            width: 100%; /* Botão do formulário em largura total */
         }
-
+    
         .cancel-button {
             background-color: #6c757d;
             margin-left: 10px;
@@ -232,6 +248,10 @@
                 font-size: 14px;
             }
     
+            .item-description {
+                font-size: 14px;
+            }
+    
             .footer {
                 flex-direction: column;
                 align-items: flex-start;
@@ -243,8 +263,8 @@
     
             .add-button, .voice-button {
                 font-size: 14px;
-                padding: 10px; /* Ajuste no padding para responsividade */
-                width: 90%; /* Ajuste a largura para 90% */
+                padding: 8px 15px;
+                width: calc(100% - 20px); /* Largura total menos margens */
             }
     
             .popup-content {
@@ -274,6 +294,10 @@
                 font-size: 12px;
             }
     
+            .item-description {
+                font-size: 12px; /* Tamanho reduzido para telas menores */
+            }
+    
             .footer {
                 flex-direction: column;
                 align-items: flex-start;
@@ -285,8 +309,6 @@
     
             .add-button, .voice-button {
                 font-size: 14px;
-                padding: 10px; /* Ajuste no padding para responsividade */
-                width: 90%; /* Ajuste a largura para 90% */
             }
     
             .popup-content {
@@ -298,9 +320,8 @@
                 font-size: 12px;
             }
         }
-    
+ 
     </style>
-    
     
     
 </head>
